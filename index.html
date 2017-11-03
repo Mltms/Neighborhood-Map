@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+    <title>Sidebar</title>
+    <!-- Custom styles for this template -->
+    <link href="css/Css.css" rel="stylesheet">
+    
+
+</head>
+    
+<body>
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <input placeholder=" - Location Name - " data-bind= "value : search" >
+  <input type="button" value="Search">
+  <br><br>
+    <div data-bind="foreach:locations">
+    <a data-bind="click:$root.ListClick, text:title" href="" ></a>
+        </div>
+</div>
+
+<!-- Use any element to open the sidenav -->
+<span onclick="openNav()">Menu</span>
+
+<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+<div id="map">
+    </div>  
+</body>
+    
+    <script
+        async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhlTagKEJD4bYoFxQZqn_9-8SStYpy9bI&callback=initMap"   onerror="handleError()">
+    </script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+    <script src="js/map.js"></script>
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+    
+</html>
