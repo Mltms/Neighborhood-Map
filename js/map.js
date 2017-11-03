@@ -108,10 +108,10 @@ function AppViewModel(locations,marker) {
         
 }, this);
     
-    self.ListClick = function(place, marker) {
+    self.ListClick = function(place) {
     console.log(place.title);
     console.log(place);
-    google.maps.event.trigger(marker, "click");
+    google.maps.event.trigger(place.marker, "click");
 };
     
 };
