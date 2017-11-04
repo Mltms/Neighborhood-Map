@@ -144,7 +144,7 @@ function GetData(marker, infowindow, map) {
         address = (data.response.venues[0].location.address);
         infowindow.setContent('<div>' + Name + '</div>' + '<div>' + phone + '</div>'+ address + '</div>');
         infowindow.open(map, marker);
-        marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
+        marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
         marker.setAnimation(google.maps.Animation.BOUNCE);
 
 
