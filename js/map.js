@@ -70,14 +70,19 @@ function initMap() {
             animation: google.maps.Animation.DROP,
           });
           // Push the marker to our array of markers.
-          markers.push(marker);
-            marker.addListener('click', function() {
-           GetData(this, infowindow);    
-         });
+        markers.push(marker);
+//        marker.addListener('click', function() {
+//            GetData(this, infowindow);    
+//         });
+            google.maps.event.addListener(marker, 'click', handler(marker));
     }
     console.log(markers);
-        }
+    
+    function handler(marker) {
+    return function() { GetData(this, infowindow); };
+}
 
+        }
 
 function AppViewModel(locations,marker,infowindow) {
     console.log(markers);
@@ -149,7 +154,7 @@ function GetData(marker, infowindow, map) {
 
 
     }).fail(function(error) {
-        alert("Failed to connect");
+      alert("Failed to connect");
     });
     infowindow.open(map, marker);
             
