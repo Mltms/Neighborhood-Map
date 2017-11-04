@@ -43,7 +43,7 @@ var locations = [
 var map;
 var markers = [];
 var Riyadh = {lat: 24.774265, lng: 46.738586};
-
+console.log(markers);
 function initMap() {
            map = new google.maps.Map(document.getElementById('map'), {
           zoom: 12,
@@ -71,22 +71,22 @@ function initMap() {
           });
           // Push the marker to our array of markers.
           markers.push(marker);
-            
-           marker.addListener('click', function() {
-           GetData(this, infowindow);
-               
+            marker.addListener('click', function() {
+           GetData(this, infowindow);    
          });
-            
-    }          
+    }
+    console.log(markers);
         }
 
-function AppViewModel(locations,marker) {
+
+function AppViewModel(locations,marker,infowindow) {
+    console.log(markers);
     self = this;
     self.search = ko.observable("");
     self.locations = ko.observableArray(locations);
     self.title = ko.observableArray(locations.title);
+    self.places = ko.observableArray(markers);
     self.ListClick = ko.observable();
-    
     // I wanted to use the stringStartsWith but it was removed from Knockout so i used this insted.
     var stringStartsWith = function (string, startsWith) {          
     string = string || "";
@@ -96,7 +96,7 @@ function AppViewModel(locations,marker) {
 };
     this.locations = ko.computed(function() {
         var filter = self.search().toLowerCase();
-        if(filter == ""){
+        if(filter === ""){
          return locations;
         }
         else {       
@@ -108,14 +108,11 @@ function AppViewModel(locations,marker) {
         
 }, this);
     
-    self.ListClick = function(place, markers) {
-    console.log(place.title);
-    console.log(place);
-    google.maps.event.trigger(markers, "click");
-};
+    self.ListClick = function(place,marker) {
+            google.maps.event.trigger(markers, "click");
+        };
+}
     
-};
-
 // Activates knockout.js
 ko.applyBindings(new AppViewModel(locations));
 
