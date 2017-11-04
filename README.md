@@ -3,9 +3,9 @@
 Just open the index.html file and explore the map.
 
 ## Used 
-FourSquare Api
-Google map Api
-jquery
+FourSquare Api <br />
+Google map Api <br />
+jquery <br />
 knockout.js
 
 ## Resources
