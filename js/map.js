@@ -96,6 +96,9 @@ function initMap() {
 
         }
       }
+function handleError(){
+    alert('Google Maps error triggered');
+}
 
 
 function AppViewModel(locations,marker,infowindow) {
