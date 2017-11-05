@@ -132,7 +132,6 @@ function AppViewModel(locations, marker, infowindow) {
             return ko.utils.arrayFilter(self.locations(), function(location) {
                 var match = stringStartsWith(location.title.toLowerCase(), filter);
                 return match;
-                marker.setVisible(false);
             });
         }
 
