@@ -67,6 +67,7 @@ function initMap() {
             map: map,
             position: position,
             title: title,
+            icon : 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
             animation: google.maps.Animation.DROP,
           });
           // Push the marker to our array of markers.
@@ -79,10 +80,23 @@ function initMap() {
     console.log(markers);
     
     function handler(marker) {
+//    if (marker.getAnimation() !== null) {
+//    marker.setAnimation(null);
+//  } else {
+//    marker.setAnimation(google.maps.Animation.BOUNCE);
     return function() { GetData(this, infowindow); };
 }
 
         }
+    function clearAnimation() {
+        for (var i = 0; i < markers.length; i++) {
+//          markers[i].setMap(null);
+            markers[i].setAnimation(null);
+            markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
+
+        }
+      }
+
 
 function AppViewModel(locations,marker,infowindow) {
     console.log(markers);
@@ -90,8 +104,9 @@ function AppViewModel(locations,marker,infowindow) {
     self.search = ko.observable("");
     self.locations = ko.observableArray(locations);
     self.title = ko.observableArray(locations.title);
-    self.places = ko.observableArray(markers);
+    self.places = ko.observableArray(markers.title);
     self.ListClick = ko.observable();
+    console.log(self.locations);
     // I wanted to use the stringStartsWith but it was removed from Knockout so i used this insted.
     var stringStartsWith = function (string, startsWith) {          
     string = string || "";
@@ -99,22 +114,24 @@ function AppViewModel(locations,marker,infowindow) {
         return false;
     return string.substring(0, startsWith.length) === startsWith;
 };
-    this.locations = ko.computed(function() {
+    this.locations = ko.computed(function(marker) {
         var filter = self.search().toLowerCase();
         if(filter === ""){
          return locations;
         }
         else {       
-            return ko.utils.arrayFilter(self.locations(), function(location) {
+                return ko.utils.arrayFilter(self.locations(), function(location) {
                 var match = stringStartsWith(location.title.toLowerCase(), filter);
                 return match;
+                marker.setVisible(false);
         });
     }
         
 }, this);
     
-    self.ListClick = function(place,marker) {
-            google.maps.event.trigger(markers, "click");
+    self.ListClick = function(place) {
+            google.maps.event.trigger(place.marker, "click");
+            console.log(self.places.locations);
         };
 }
     
@@ -144,11 +161,15 @@ function GetData(marker, infowindow, map) {
         async: true
       }
     }).done(function(data) { 
-        phone = (data.response.venues[0].contact.phone);
-        Name = (data.response.venues[0].name);
-        address = (data.response.venues[0].location.address);
+        data.response.venues[0].contact.phone ? phone = data.response.venues[0].contact.phone : phone = 'No Phone available';
+        data.response.venues[0].name ? Name = data.response.venues[0].name : Name = 'No Name available';
+        data.response.venues[0].location.address ? address = data.response.venues[0].location.address : address = 'No address available';
+//        phone = (data.response.venues[0].contact.phone);
+//        Name = (data.response.venues[0].name);
+//        address = (data.response.venues[0].location.address);
         infowindow.setContent('<div>' + Name + '</div>' + '<div>' + phone + '</div>'+ address + '</div>');
         infowindow.open(map, marker);
+        clearAnimation();
         marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
         marker.setAnimation(google.maps.Animation.BOUNCE);
 
