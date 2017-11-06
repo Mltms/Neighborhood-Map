@@ -13,7 +13,7 @@
          <input placeholder=" - Location Name - " data-bind= "value : search" >
          <input type="button" value="Search">
          <br><br>
-         <div data-bind="foreach:locations">
+         <div data-bind="foreach:fillterd">
             <a data-bind="click:$root.ListClick, text:title" href="" ></a>
          </div>
       </div>
